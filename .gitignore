@@ -1,0 +1,15 @@
+*.iml
+*.idea
+*.suo
+*.log
+*.obj
+*.pdb
+*.user
+*.cache
+**/target/
+*.sdf
+**/.tern-project
+**/.settings/
+**/.project
+**/.classpath
+*/**/.gitignore
