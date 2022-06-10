@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SubjectTest {
 
+    Subject subject = new Subject();
     @Test
     void register() {
-        Subject subject = new Subject();
         subject.register(new Observer());
     }
 
@@ -18,5 +18,12 @@ class SubjectTest {
 
     @Test
     void notifyObservers() {
+        subject.register(new Observer());
+        subject.register(new Observer());
+        Observer observer = new Observer();
+        subject.register(observer);
+        subject.unregister(observer);
+        subject.register(new Observer());
+        subject.setState("Todays news");
     }
 }
