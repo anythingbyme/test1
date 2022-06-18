@@ -1,26 +1,59 @@
 package ds.ll;
 
 public class LinkedList<E> implements ILinkedList<E> {
+    //Having a reference to first and last makes it a double-ended linked list
     private Node first;
     private Node last;
     private Node node;
 
-    @Override
-    public void insert(E e ) {
-        Node newNode = new Node(e,first);
-        if (node == null) {
-            node = new Node(e);
-            node.setVal(newNode.getVal());
-            node.setNext(newNode);
-        }
-        else {
-            Node temp = node.getNext();
-            temp.setNext(newNode);
-            node.setNext(newNode);
-        }
-
+    public Node getNode() {
+        return node;
     }
 
+    public void setNode(Node node) {
+        this.node = node;
+    }
+
+    private int size;
+
+    @Override
+    public void insert(E e ) {
+        Node newNode = new Node(e);
+        newNode.setNext(first);
+        node = newNode;
+        size++;
+    }
+
+    @Override
+    public void insertFirst(E e) {
+        Node newNode = new Node(e);
+        //newNode.next=first;
+        //first = newNode
+        newNode.setNext(first);
+        first = newNode;
+        size++;
+    }
+
+    @Override
+    public void insertLast(E e) {
+        Node newNode = new Node<E>(e);
+        //first.next = newNode;
+        //first = newNode
+        if (first == null) {
+            first = newNode;
+        }
+        first.setNext(newNode);
+        first = newNode;
+        size++;
+    }
+
+    public Node getFirst() {
+        return first;
+    }
+
+    public void setFirst(Node first) {
+        this.first = first;
+    }
 
     public void insert2(E e ) {
         if (first == null) {
@@ -80,12 +113,15 @@ public class LinkedList<E> implements ILinkedList<E> {
 
     @Override
     public int size() {
-        int i = 0;
-        while (node != null) {
-            node = node.getNext();
-            i++;
-        }
-        return i;
+//        int i = 0;
+//        Node temp = first;
+//        System.out.println(temp.getVal());
+//        while (temp != null) {
+//            temp = temp.getNext();
+//            i++;
+//        }
+//        return i;
+        return this.size;
     }
 
     @Override

@@ -3,9 +3,8 @@ package ds.ll;
 public class Node<E> {
     private E val;
     private Node next;
-    public Node(E e, Node next) {
+    public Node(E e) {
         this.val = e;
-        this.next = next;
     }
 
     public E getVal() {
