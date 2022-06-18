@@ -6,14 +6,6 @@ public class LinkedList<E> implements ILinkedList<E> {
     private Node last;
     private Node node;
 
-    public Node getNode() {
-        return node;
-    }
-
-    public void setNode(Node node) {
-        this.node = node;
-    }
-
     private int size;
 
     @Override
@@ -24,9 +16,17 @@ public class LinkedList<E> implements ILinkedList<E> {
         size++;
     }
 
+    /**
+     * Inserting first makes linkedlist a stack
+     * @param e
+     */
     @Override
     public void insertFirst(E e) {
         Node newNode = new Node(e);
+        if (first == null) {
+            first = newNode;
+            last = newNode;
+        }
         //newNode.next=first;
         //first = newNode
         newNode.setNext(first);
@@ -34,6 +34,10 @@ public class LinkedList<E> implements ILinkedList<E> {
         size++;
     }
 
+    /**
+     * Inserting first makes linkedlist a queue
+     * @param e
+     */
     @Override
     public void insertLast(E e) {
         Node newNode = new Node<E>(e);
@@ -41,9 +45,10 @@ public class LinkedList<E> implements ILinkedList<E> {
         //first = newNode
         if (first == null) {
             first = newNode;
+            last = newNode;
         }
-        first.setNext(newNode);
-        first = newNode;
+        last.setNext(newNode);
+        last = newNode;
         size++;
     }
 
@@ -72,7 +77,7 @@ public class LinkedList<E> implements ILinkedList<E> {
     }
 
     public Node getLast() {
-        return node.getNext();
+        return last;
     }
 
     public void insert1(E e ) {
@@ -113,14 +118,6 @@ public class LinkedList<E> implements ILinkedList<E> {
 
     @Override
     public int size() {
-//        int i = 0;
-//        Node temp = first;
-//        System.out.println(temp.getVal());
-//        while (temp != null) {
-//            temp = temp.getNext();
-//            i++;
-//        }
-//        return i;
         return this.size;
     }
 
@@ -128,4 +125,13 @@ public class LinkedList<E> implements ILinkedList<E> {
     public E next() {
         return null;
     }
+
+    public Node getNode() {
+        return node;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
+    }
+
 }
