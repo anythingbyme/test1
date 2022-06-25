@@ -11,7 +11,9 @@ public class LinkedList<E> implements ILinkedList<E> {
     @Override
     public void insert(E e ) {
         Node newNode = new Node(e);
-        newNode.setNext(first);
+        //node.next=first
+        //first=node
+        newNode.setNext(node);
         node = newNode;
         size++;
     }
@@ -27,10 +29,13 @@ public class LinkedList<E> implements ILinkedList<E> {
             first = newNode;
             last = newNode;
         }
-        //newNode.next=first;
-        //first = newNode
-        newNode.setNext(first);
-        first = newNode;
+        else {
+            //newNode.next=first;
+            //first = newNode
+            newNode.setNext(first);
+            first = newNode;
+        }
+
         size++;
     }
 
@@ -108,7 +113,61 @@ public class LinkedList<E> implements ILinkedList<E> {
 
     @Override
     public void delete(E e) {
+        if (node != null) {
+            //node = node.next
+            node = node.getNext();
+            size--;
+        }
+    }
 
+    @Override
+    public void deleteFirst() {
+        if (first != null) {
+            Node temp = first;
+            first = first.getNext();
+            size--;
+            temp = null;
+        }
+    }
+
+    @Override
+    public void sort() {
+        Node temp = first;
+        while(temp != null) {
+            if (temp.getNext() != null && temp.getVal() instanceof Integer) {
+                if ((Integer)temp.getVal() > (Integer) temp.getNext().getVal()) {
+//                    Node t = new Node(temp.getVal());
+//                    temp.setVal(temp.getNext().getVal());
+//                    temp.getNext().setVal(t.getVal());
+                    Node t = temp;
+                    temp = temp.next();
+                    temp.setNext(t);
+                }
+                else {
+                    temp = temp.getNext();
+                }
+            }
+            else {
+                temp = temp.getNext();
+            }
+//            first = first.getNext();
+        }
+    }
+
+    @Override
+    public void deleteLast() {
+        if (last != null) {
+            last = last.getNext();
+            size--;
+        }
+    }
+
+    public void traverse() {
+        Node temp = first;
+        while (first != null) {
+            System.out.println("Traverse(): "+temp.getVal());
+            first = first.getNext();
+        }
     }
 
     @Override
@@ -126,6 +185,18 @@ public class LinkedList<E> implements ILinkedList<E> {
         return null;
     }
 
+    @Override
+    public void display() {
+        if (size == 0) {
+            System.out.println("Display():List is empty");
+        }
+        Node temp = first;
+        while (temp != null) {
+            System.out.println("Display(): "+temp.getVal());
+            temp = temp.next();
+        }
+    }
+
     public Node getNode() {
         return node;
     }
@@ -133,5 +204,7 @@ public class LinkedList<E> implements ILinkedList<E> {
     public void setNode(Node node) {
         this.node = node;
     }
+
+
 
 }
