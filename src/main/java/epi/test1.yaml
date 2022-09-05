@@ -1,0 +1,14 @@
+---
+name: raj
+emails:
+  - test@test.com
+  - test2@test2.com
+address: &address
+  street: ''
+  city: ''
+  zip: 11111
+profile:
+  <<:  *address
+isResidential: true
+
+

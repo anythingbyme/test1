@@ -2,10 +2,23 @@ package ds.ll;
 
 public class Node<E> {
     private E val;
-    private Node next;
+    public Node next;
+    public Node prev;
     public Node(E e) {
         this.val = e;
     }
+
+    public Node(E val, Node next) {
+        this.val = val;
+        this.next = next;
+    }
+
+    public Node(E val, Node next, Node prev) {
+        this.val = val;
+        this.next = next;
+        this.prev = prev;
+    }
+
 
     public E getVal() {
         return val;
