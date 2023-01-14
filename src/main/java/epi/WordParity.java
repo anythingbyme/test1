@@ -35,9 +35,9 @@ package epi;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class WordParity {
     public short compute(String word) {
@@ -366,7 +366,16 @@ public class WordParity {
     public void printArr(int[][] a) {
         for ( int i=0;i<a.length;i++) {
             for (int j=0;j<a[i].length;j++) {
-                System.out.print(a[i][j]);
+                System.out.print(a[i][j] +" ");
+            }
+            System.out.println("");
+        }
+    }
+
+    public void printArr(char[][] a) {
+        for ( int i=0;i<a.length;i++) {
+            for (int j=0;j<a[i].length;j++) {
+                System.out.print(a[i][j] + "  ");
             }
             System.out.println("");
         }
@@ -631,6 +640,74 @@ public class WordParity {
 
     public void s3() {
 //        S3Client.builder()
+    }
+
+    public int[] removeDup(int[] a) {
+        return Arrays.stream(a).distinct().toArray();
+    }
+
+    public int[] removeDup1(int[] a) {
+        var s = new LinkedHashSet<Integer>();
+        for (int b : a) {
+            s.add(b);
+        }
+        return s.stream().mapToInt(value -> value.intValue()).toArray();
+    }
+
+    public int[] sortNegToLeft(int[] a) {
+        // -2 1 4 -1 5 6 -7
+        // -2 -1 -7 1 5 6
+
+        var neg = new ArrayList<Integer>();
+        var pos = new ArrayList<Integer>();
+        for (int i=0;i<a.length;i++) {
+            if (a[i] < 0) {
+                neg.add(a[i]);
+            }
+            else {
+                pos.add(a[i]);
+            }
+        }
+        var res = new ArrayList<Integer>(neg);
+        res.addAll(pos);
+        return res.stream().mapToInt(v->v.intValue()).toArray();
+    }
+
+    public boolean isIntPalindrome(int n) {
+        //123
+        var l = new ArrayList<Integer>();
+        while (n > 0) {
+            l.add(n%10);
+            n /= 10;
+        }
+        int i = 0;
+        int j = l.size()-1;
+        while (i < j) {
+            if (l.get(i) != l.get(j)) {
+                return false;
+            }
+            i++;j--;
+        }
+        return true;
+    }
+
+    public void printRepeatedChars(String s) {
+        // s = abcdabdefhefh
+//        char[] c = s.toCharArray();
+//        var set = new HashSet<String>();
+//        var res = new HashSet<String>();
+//        for (int i =0;i<c.length;i++) {
+//            if (set.contains(String.valueOf(c[i]))) {
+//                res.add(String.valueOf(c[i]));
+//            }
+//            else {
+//                set.add(String.valueOf(c[i]));
+//            }
+//        }
+//        res.forEach(a-> System.out.print(a + " "));
+        char[] c = s.toCharArray();
+        int[] a ={1,1,1,};
+        Arrays.stream(a).distinct().forEach(a1->System.out.print(a1));
     }
 
 }

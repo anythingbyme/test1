@@ -1,9 +1,19 @@
 package epi;
 
+import model.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.Assert;
+import util.ProductUtil;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.locks.LockSupport;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class WordParityTest {
 
@@ -483,5 +493,262 @@ class WordParityTest {
         Assertions.assertEquals(2, a[1]);
         Assertions.assertEquals(3, a[2]);
         Assertions.assertEquals(4, a[3]);
+    }
+
+    @Test
+    void rotateArr() {
+        int[] a = {1,2,3,4};
+        rotate(a, 4);
+        Assertions.assertEquals(1, a[0]);
+        Assertions.assertEquals(2, a[1]);
+        Assertions.assertEquals(3, a[2]);
+        Assertions.assertEquals(4, a[3]);
+    }
+
+    public void rotate(int[] a, int k) {
+        while (k-- > 0) {
+            int i = 0;
+            int j = i+1;
+            while (j < a.length){
+                int t = a[i];
+                a[i] = a[j];
+                a[j++] = t;
+            }
+        }
+    }
+
+    @Test
+    void removeDup() {
+        int[] a = {1,1,1,1,1,1,2,2,2,2,2,3,3,3,3};
+//        a = wp.removeDup(a);
+        a = wp.removeDup1(a);
+        Assertions.assertEquals(1, a[0]);
+        Assertions.assertEquals(2, a[1]);
+        Assertions.assertEquals(3, a[2]);
+    }
+
+    @Test
+    void sortNegToLeft() {
+        int[] a = {-2, 1, 4, -1, 5, 6, -7};
+        // -2 -1 -7 1 5 6
+        a = wp.sortNegToLeft(a);
+        Assertions.assertEquals(-2, a[0]);
+        Assertions.assertEquals(-1, a[1]);
+        Assertions.assertEquals(-7, a[2]);
+        Assertions.assertEquals(1, a[3]);
+        Assertions.assertEquals(4, a[4]);
+        Assertions.assertEquals(5, a[5]);
+        Assertions.assertEquals(6, a[6]);
+    }
+
+    @Test
+    void intPalindrome() {
+        int a = 1234321;
+        Assertions.assertEquals(true, wp.isIntPalindrome(a));
+    }
+
+
+    @Test
+    void printRepeatedChars() {
+        String s = "abcdabdefhefh";
+        wp.printRepeatedChars(s);
+    }
+
+    @Test
+    void matrix() {
+
+        int rows = 9;
+        int cols = 9;
+
+        char[][] a = new char[rows][];
+
+        int v = 1;
+        for (int i=0;i<rows;i++) {
+            a[i] = new char[cols];
+            for (int j=0;j<cols;j++) {
+                a[i][j] = '*';
+            }
+        }
+
+        wp.printArr(a);
+    }
+
+    @Test
+    void matrixInt() {
+
+        int rows = 9;
+        int cols = 9;
+
+        int[][] a = new int[rows][];
+
+
+
+
+        for (int i=0;i<rows;i++) {
+            int val = 1;
+            a[i] = new int[cols];
+            Set<Integer> counter = new HashSet<>();
+            for (int j=0;j<cols;j++) {
+
+                while (counter.size() != 9) {
+//                    int r = getRandom();
+                    if (val > 9) {
+                        val = 1;
+                    }
+                    int r = val++;
+                    boolean badSudoku = false;
+                    if (!counter.contains(r)) {
+                        //check rows
+                        for (int k=0;k<cols;k++) {
+                            if (a[i][k] == r) {
+                                // invalid sudoku
+                                System.out.println("Invalid sudoku rows check.."+ r);
+                                badSudoku = true;
+                                break;
+                            }
+                        }
+
+                        //check cols
+                        for (int k=0;k<rows;k++) {
+                            if (a[k] == null) {
+                                break;
+                            }
+                            if (a[k][j] == r) {
+                                // invalid sudoku
+                                System.out.println("Invalid sudoku cols check.."+ r);
+                                badSudoku = true;
+                                break;
+                            }
+                        }
+                        if (!badSudoku) {
+                            counter.add(r);
+                            a[i][j] = r;
+                            break;
+                        }
+
+                    }
+                }
+
+//                else {
+//                    counter.add(random);
+//                }
+
+            }
+        }
+
+        wp.printArr(a);
+    }
+
+//    private int getRand(Set<Integer> counter) {
+//        while (!counter.contains(random) && counter.size() < 10) {
+//            a[i][j] = random;
+//            counter.add(random);
+//        }
+//
+////        get random
+////        contains random
+//    }
+
+    @Test
+    void random() {
+        var r = new Random();
+        for (int i = 0; i < 15; i++) {
+            System.out.print(r.nextInt(10) +"  ");
+        }
+    }
+
+    Random r = new Random();
+    private int getRandom() {
+//        r.setSeed(1);
+        return ThreadLocalRandom.current().nextInt(1,10);
+    }
+
+    @Test
+    void arr1() {
+        int[] a = {3,2,2,3,4,3,2,3};
+        int[] b = Arrays.stream(a).distinct().toArray();
+        new WordParity().printArr(b);
+//        new WordParity().printArr(Arrays.stream(b).sorted().toArray());
+    }
+
+    @Test
+    void flatMap() {
+        String[][] s = {{"hello","there"},{"hw","welcome"}};
+        List<String> l =  Arrays.stream(s).flatMap(s1-> Arrays.stream(s1)).collect(Collectors.toList());
+        l.forEach(a-> System.out.println(a));
+     }
+
+     public BigDecimal reduce(List<Product> products) {
+         return products.stream().map(Product::getPrice).
+                 reduce(BigDecimal.ZERO, (p1,p2)->p1.add(p2));
+     }
+    @Test
+    void products() {
+//        Thread t = new Thread();
+//        LockSupport.park(this);
+//        LockSupport.unpark(this);
+
+//        Map m = new ConcurrentHashMap();
+//        m.
+
+        Map<String, List<Product>> m = ProductUtil.groupById(ProductUtil.createProducts());
+
+        Collection<List<Product>> val = m.values().stream()
+                .sorted(Comparator.comparing(products -> reduce(products)))
+                .collect(Collectors.toList());
+
+        List<Product> ps = new ArrayList<>();
+        for (List<Product> products: val) {
+            System.out.println("=>"+ products.stream().peek(p->System.out.print(p.getId())).map(Product::getPrice).reduce(BigDecimal.ZERO, (p1,p2)->p1.add(p2)));
+        }
+        System.out.println(m.size());
+    }
+
+    @Test
+    void reduce() {
+        int[] a = {1,2,3,4,5};
+        System.out.println(Arrays.stream(a).reduce(0, (left, right) -> left + right));
+        System.out.println(Arrays.stream(a).reduce(0, (left, right) -> left + right));
+    }
+
+    @Test
+    void twoSumTest() {
+        int[] a = {2,4,8,7,3};
+        int[] res = twoSum(a, 9);
+        Assertions.assertEquals(0, res[0]);
+        Assertions.assertEquals(3, res[1]);
+    }
+        @Test
+    void twoSumTest1() {
+        int[] a = {3,3};
+        int[] res = twoSum(a, 6);
+        Assertions.assertEquals(0, res[0]);
+        Assertions.assertEquals(1, res[1]);
+    }
+
+    @Test
+    void twoSumTest2() {
+        int[] a = {3,2,4};
+        int[] res = twoSum(a, 6);
+        Assertions.assertEquals(1, res[0]);
+        Assertions.assertEquals(2, res[1]);
+    }    @Test
+    void twoSumTest3() {
+        int[] a = {3,3};
+        int[] res = twoSum(a, 6);
+        Assertions.assertEquals(0, res[0]);
+        Assertions.assertEquals(1, res[1]);
+    }
+
+    private int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> m = new LinkedHashMap<>();
+        for (int i=0;i<nums.length;i++) {
+            int num = Math.abs(nums[i]-target);
+            if (m.containsKey(num)) {
+                return new int[]{m.get(num), i};
+            }
+            m.put(nums[i], i);
+        }
+        return null;
     }
 }

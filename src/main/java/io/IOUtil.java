@@ -45,7 +45,7 @@ public final class IOUtil {
         } catch (IOException e) {
             System.out.println("Unable to create file: " + path.toString());
             return false;
-        }
+}
         return true;
     }
 
