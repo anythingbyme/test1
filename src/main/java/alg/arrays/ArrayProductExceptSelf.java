@@ -10,12 +10,9 @@ public class ArrayProductExceptSelf {
                 if (i!=j) {
                     r *= nums[j];
                 }
-
-
             }
             res[i] = r;
         }
-
         return res;
     }
 }
