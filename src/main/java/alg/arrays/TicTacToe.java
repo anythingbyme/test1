@@ -7,11 +7,11 @@ public class TicTacToe {
         if (scanRow(board)) {
             return;
         }
+        //scan col
         if(scanCol(board)) {
             return;
         }
         scanDiagnols(board);
-        //scan col
         //scan diagnols
     }
     private boolean scanRow(char[][] board) {
