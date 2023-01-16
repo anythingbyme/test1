@@ -26,12 +26,7 @@ public class LongestConsecutiveSeq {
             // check contains n--, go right
             int rightMax = findRightMax(n,m);
             // go left
-            int leftMax = 0;
-            int left = n;
-            while (m.containsKey(left--)) {
-                leftMax ++;
-//                left = n;
-            }
+            int leftMax = findLeftMax(n, m);
             int elemMax = Math.max(rightMax, leftMax);
             max = Math.max(max, elemMax);
         }
