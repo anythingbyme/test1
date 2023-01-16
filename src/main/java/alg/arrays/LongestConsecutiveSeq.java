@@ -24,11 +24,7 @@ public class LongestConsecutiveSeq {
         int max = 0;
         for (int n: nums) {
             // check contains n--, go right
-            int rightMax = 0;
-            int right = n;
-            while (m.containsKey(right++)) {
-                rightMax ++;
-            }
+            int rightMax = findRightMax(n,m);
             // go left
             int leftMax = 0;
             int left = n;
@@ -56,7 +52,6 @@ public class LongestConsecutiveSeq {
         int left = n;
         while (m.containsKey(left--)) {
             leftMax ++;
-            left = n;
         }
         return leftMax;
     }
