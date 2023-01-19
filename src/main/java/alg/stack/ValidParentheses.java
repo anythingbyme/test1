@@ -29,6 +29,6 @@ public class ValidParentheses {
                 }
             }
         }
-        return stack.size() == 0;
+        return stack.empty();
     }
 }
