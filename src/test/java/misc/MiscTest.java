@@ -10,9 +10,31 @@ import java.util.stream.Collectors;
 
 class MiscTest {
 
+    private Misc misc = new Misc();
+
     @Test
     void rShift() {
     }
+
+    @Test
+    void filterNames1() {
+        List<String> names = List.of("aj", "ak", "raj", "su");
+        misc.filterNames(names, s->s.length()>2);
+    }
+
+    @Test
+    void filterNames2() {
+        List<String> names = List.of("aj", "ak", "raj", "su");
+        misc.filterNames(names, s->s.length()< 3);
+    }
+
+    @Test
+    void transformNames1() {
+        List<String> names = List.of("aj", "ak", "raj", "su");
+        misc.trandformNames(names, s->s.toUpperCase());
+    }
+
+
 
     @Test
     void rightShift() {
