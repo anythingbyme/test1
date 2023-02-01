@@ -40,7 +40,7 @@ class WordParityTest {
         Assertions.assertEquals("101", Integer.toBinaryString(5));
         Assertions.assertEquals("111", Integer.toBinaryString(7));
         System.out.println((Integer.toBinaryString((int) 'a')));
-        System.out.println(StandardCharsets.UTF_8.encode("raju"));
+        System.out.println(StandardCharsets.UTF_8.encode("rj"));
         Assertions.assertEquals(50, 100 >> 1); // 100/2
         Assertions.assertEquals(25, 100 >> 2); // 100/Math.pow(2,2)
         Assertions.assertEquals(400, 100 << 2); // 100*Math.pow(2,2)
@@ -421,7 +421,7 @@ class WordParityTest {
         Assertions.assertEquals("ba", wp.stringReverseRecur("ab"));
         Assertions.assertEquals("edcba", wp.stringReverseRecur("abcde"));
         Assertions.assertEquals("olleH", wp.stringReverseRecur("Hello"));
-        Assertions.assertEquals("ujaR si eman yM", wp.stringReverseRecur("My name is Raju"));
+        Assertions.assertEquals("ujaR si eman yM", wp.stringReverseRecur("My name is rj"));
     }
 
     @Test
