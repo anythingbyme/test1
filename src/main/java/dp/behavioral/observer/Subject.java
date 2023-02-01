@@ -1,5 +1,7 @@
 package dp.behavioral.observer;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
  * strive for loose coupling btw objects that interact
  *
  */
+@Data
 public class Subject implements ISubject{
     List<IObserver> observers = new ArrayList<>();
     private String state;
@@ -32,6 +35,11 @@ public class Subject implements ISubject{
             iObserver.update(state);
 
         });
+    }
+
+    @Override
+    public void notificationReceived() {
+        System.out.println("Notification received for " + state);
     }
 
     public void setState(String newData) {
